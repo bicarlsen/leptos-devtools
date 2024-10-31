@@ -1,4 +1,4 @@
-export function createPortMessanger(port: chrome.runtime.Port) {
+export function createPortMessenger(port: chrome.runtime.Port) {
     const listeners: Array<(message: any, port: chrome.runtime.Port) => void> = []
     const disconnectListeners: Array<() => void> = []
 

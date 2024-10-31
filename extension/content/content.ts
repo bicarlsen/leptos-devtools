@@ -1,4 +1,4 @@
-import { createPortMessanger } from "../utils/bridge"
+import { createPortMessenger } from "../utils/bridge"
 import { LEPTOS_DEVTOOLS_MESSAGE, ConnectionName } from "../utils/constant"
 import { createOnMessage } from "../utils/message"
 // @ts-expect-error ?script&module query ensures output in ES module format and only import the script path
@@ -19,7 +19,7 @@ window.addEventListener("message", ev => {
         }
 
         port = chrome.runtime.connect({ name: ConnectionName.Content })
-        const { postPortMessage, onPortMessage: fromBackground } = createPortMessanger(port)
+        const { postPortMessage, onPortMessage: fromBackground } = createPortMessenger(port)
         toBackground = postPortMessage
         fromBackground(message => {
             window.postMessage(createOnMessage(message.payload))

@@ -1,8 +1,8 @@
-import { createPortMessanger } from "../utils/bridge"
+import { createPortMessenger } from "../utils/bridge"
 import { ConnectionName } from "../utils/constant"
 
 const port = chrome.runtime.connect({ name: ConnectionName.Developer })
-const { onPortMessage: fromBackground } = createPortMessanger(port)
+const { onPortMessage: fromBackground } = createPortMessenger(port)
 
 let panel: chrome.devtools.panels.ExtensionPanel | null = null
 

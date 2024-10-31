@@ -2,7 +2,7 @@ import { ConnectionName } from "../utils/constant"
 import type { Message } from "../types/message"
 import { createMessage, createOnMessage } from "../utils/message"
 import icons from "../utils/icon"
-import { createPortMessanger } from "../utils/bridge"
+import { createPortMessenger } from "../utils/bridge"
 import popups from "../popup/popup"
 
 const panelPortMap = new Map<number, chrome.runtime.Port>()
@@ -17,7 +17,7 @@ function handleContent(port: chrome.runtime.Port) {
         postPortMessage: toContent,
         onPortMessage: fromContent,
         onDisconnect,
-    } = createPortMessanger(port)
+    } = createPortMessenger(port)
     const tabId = port.sender!.tab!.id!
     toContent(
         createOnMessage({
@@ -54,7 +54,7 @@ chrome.runtime.onConnect.addListener(port => {
             if (activeTabId === -1) {
                 return
             }
-            const { postPortMessage: toDeveloper, onDisconnect } = createPortMessanger(port)
+            const { postPortMessage: toDeveloper, onDisconnect } = createPortMessenger(port)
 
             developerToolsPortMap.set(activeTabId, port)
             if (contentPortMap.has(activeTabId)) {
@@ -69,7 +69,7 @@ chrome.runtime.onConnect.addListener(port => {
             if (activeTabId === -1) {
                 return
             }
-            const { onDisconnect } = createPortMessanger(port)
+            const { onDisconnect } = createPortMessenger(port)
 
             panelPortMap.set(activeTabId, port)
             contentPortMap.get(activeTabId)?.postMessage(
