@@ -1,4 +1,4 @@
-use leptos::*;
+use leptos::prelude::*;
 
 fn main() {
     leptos_devtools::devtools!();
@@ -7,7 +7,7 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
-    let (read, set_read) = create_signal(false);
+    let (read, set_read) = signal(false);
     view! {
         {move || { if read.get() { view! { <ShowRead read count=3/> }.into() } else { None } }}
 
