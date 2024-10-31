@@ -13,15 +13,15 @@
     "author": "",
     "license": "MIT",
     "devDependencies": {
-        "@crxjs/vite-plugin": "^2.0.0-beta.18",
-        "@types/chrome": "^0.0.246",
-        "@unocss/cli": "^0.55.7",
-        "typescript": "^5.2.2",
-        "unocss": "^0.55.7",
-        "vite": "^4.4.9",
-        "vite-plugin-static-copy": "^0.17.0"
+        "@crxjs/vite-plugin": "2.0.0-beta.28",
+        "@types/chrome": "0.0.279",
+        "@unocss/cli": "^0.63.6",
+        "typescript": "^5.6.3",
+        "unocss": "0.63.6",
+        "vite": "5.4.10",
+        "vite-plugin-static-copy": "2.0.0"
     },
-    "packageManager": "pnpm@8.6.0",
+    "packageManager": "pnpm@9.12.3",
     "engines": {
         "node": ">=18",
         "pnpm": ">=8.6.0"
