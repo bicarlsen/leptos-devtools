@@ -3,25 +3,15 @@ mod devtools;
 mod extension;
 mod runtime;
 
-use devtools::Devtools;
 use extension::on_message;
 use leptos_devtools_extension_api::register_leptos;
-use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
+pub use devtools::Devtools;
 pub use runtime::set_cargo_manifest_dir;
 
 pub fn devtools() {
     register_leptos();
     on_message();
-    tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::TRACE)
-        .without_time()
-        .with_file(true)
-        .with_line_number(true)
-        .with_target(false)
-        .finish()
-        .with(Devtools::default())
-        .init();
 }
 
 #[macro_export]

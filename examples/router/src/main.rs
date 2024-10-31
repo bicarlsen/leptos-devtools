@@ -1,15 +1,21 @@
 use leptos::prelude::*;
+use leptos_devtools::Devtools;
 use router::*;
-use tracing_subscriber::fmt;
+use tracing_subscriber::{fmt, prelude::*};
 use tracing_subscriber_wasm::MakeConsoleWriter;
 
 pub fn main() {
-    fmt()
+    let fmt_layer = fmt::Layer::default()
         .with_writer(MakeConsoleWriter::default().map_trace_level_to(tracing::Level::DEBUG))
         .without_time()
-        .with_ansi(false)
+        .with_ansi(false);
+    let devtools_layer = Devtools::default();
+    tracing_subscriber::registry()
+        .with(fmt_layer)
+        .with(devtools_layer)
         .init();
-    console_error_panic_hook::set_once();
+
     leptos_devtools::devtools!();
+    console_error_panic_hook::set_once();
     mount_to_body(RouterExample);
 }

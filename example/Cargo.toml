@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 leptos = { version = "0.7.0-rc", features = ["csr", "tracing"] }
 leptos_devtools = { path = "../devtools" }
+tracing-subscriber = "0.3.18"

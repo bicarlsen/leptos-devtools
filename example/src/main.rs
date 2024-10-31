@@ -1,7 +1,13 @@
 use leptos::prelude::*;
+use leptos_devtools::Devtools;
+use tracing_subscriber::prelude::*;
 
 fn main() {
     leptos_devtools::devtools!();
+    tracing_subscriber::registry()
+        .with(Devtools::default())
+        .init();
+
     mount_to_body(App);
 }
 

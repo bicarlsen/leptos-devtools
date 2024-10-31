@@ -1,8 +1,5 @@
 use crate::{utils::get_component_props, SelectedComponentId};
-use leptos::{
-    either::{Either, EitherOf6},
-    prelude::*,
-};
+use leptos::{either::Either, prelude::*};
 use serde_json::Value;
 
 #[component]
@@ -112,50 +109,4 @@ fn Value(value: Value) -> impl IntoView {
         }
         .into_any(),
     }
-    // match value {
-    // Value::Null => EitherOf6::A(view! {
-    //     <span>"null"</span>
-    // }).into_view(),
-    // Value::Bool(value) => EitherOf6::B(view! {
-    //     <span class="color-#03c">{value}</span>
-    // }).into_view(),
-    // Value::Number(value) => EitherOf6::C(view! {
-    //     <span class="color-#03c">{value.to_string()}</span>
-    // }),
-    // Value::String(value) => EitherOf6::D(view! {
-    //     <span class="white-space-nowrap">{format!(r#""{value}""#)}</span>
-    // }),
-    // Value::Array(arr) => EitherOf6::E(view! {
-    //     <div class="ml-14px">
-    //         {
-    //             arr.into_iter().enumerate().map(|(index, value)| {
-    //                 view! {
-    //                     <div class="min-h-20px line-height-20px">
-    //                         <span class="color-#8128e8">{index}</span>
-    //                         <span class="mr-0.5em">":"</span>
-    //                         <Value value/>
-    //                     </div>
-    //                 }
-    //             })
-    //             .collect::<Vec<_>>()
-    //         }
-    //     </div>
-    // }),
-    // Value::Object(obj) => EitherOf6::F(view! {
-    //     <div class="ml-14px">
-    //         {
-    //             obj.into_iter().map(|(key, value)| {
-    //                 view! {
-    //                     <div class="min-h-20px line-height-20px">
-    //                         <span class="color-#8128e8">{format!(r#""{key}""#)}</span>
-    //                         <span class="mr-0.5em">":"</span>
-    //                         <Value value/>
-    //                     </div>
-    //                 }
-    //             })
-    //             .collect::<Vec<_>>()
-    //         }
-    //     </div>
-    // }),
-    // }
 }

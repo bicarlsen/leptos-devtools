@@ -28,7 +28,7 @@ fn App() -> impl IntoView {
     on_message(message_component_update);
 
     let nodes = Memo::new(move |_| {
-        message_component_update;
+        message_component_update.track();
         gen_nodes(None, 0)
     });
 

@@ -2,7 +2,10 @@
 
 > [!WARNING]
 > This library is very unstable.
-> When there is a problem, refresh the page or re-open Developer Tools.
+> When there is a problem, refresh the page or re-open Developer Tools, and please [raise an Issue on GitHub](https://github.com/luoxiaozero/leptos-devtools/issues).
+
+> [!NOTE]
+> Currenlty only available for Google Chrome.
 
 ## Install
 
@@ -24,39 +27,52 @@ pnpm build
 
 ### 3. Install the Chrome extension
 
-1. Open the extension page in google chrome.
+1. [Open the extension page](https://support.google.com/chrome_webstore/answer/2664769?hl=en) in Google Chrome.
 
-- `chrome://extensions` in the url bar and press enter.
+- Go to the URL `chrome://extensions`.
 
-- Click on the three dots in the top right of the browser, then click "More tools" then click "Extensions".
+- Open the kebab menu (three dots in the top right of the browser), then navigate to "Extensions" > "Manage Extensions".
 
 2. Activate developer mode.
 
-Turn on the switch on the top right of the page that says "Developer mode".
+    Turn on the switch on the top right of the page that says "Developer mode".
 
 3. Load unpacked extension.
    
-Click on the button on the top left of the page that says "Load unpacked".
+    Click on the button on the top left of the page that says "Load unpacked".
 
-Select the `extension/dist` directory. `Leptos Devtools` should appear in your extension manager dashboard.
+    Select the `extension/dist` directory. `Leptos Devtools` should appear in your extension manager dashboard.
 
 ### 4. Initialize the app
 
-Add this crate to your project's `Cargo.toml` file.
+1. Add the `tracing` feature to `leptos`.
 
-```toml
-leptos_devtools = { git = "https://github.com/luoxiaozero/leptos-devtools" }
-```
+    ```toml
+    leptos = { version = "0.7", features = ["csr", "tracing"] }
+    ```
 
-Add `leptos_devtools::devtools!()` before the `mount_to_body` function in `main`.
+2. Add this crate to your project's `Cargo.toml` file.
 
-Add the `tracing` feature to `leptos`.
+    ```toml
+    leptos_devtools = { git = "https://github.com/luoxiaozero/leptos-devtools" }
+    ```
 
-```toml
-leptos = { version = "0.7", features = ["csr", "tracing"] }
-```
+3. Initialize the devtools.
+    
+    Add `leptos_devtools::devtools!()` before the `mount_to_body` function in `main`.
 
-Open the `Leptos` devtools in the Developer Tools window.
+4. Register the devtools `tracing` layer.
+
+    ```rust
+    use tracing_subscriber::prelude::*;
+    use leptos_devtools::Devtools;
+
+    tracing_subscriber::registry()
+        .with(Devtools::default())
+        .init();
+    ```
+
+5. Open the `Leptos` devtools in the Developer Tools window.
 
 ## Resources
 
