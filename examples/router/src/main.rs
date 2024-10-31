@@ -1,9 +1,15 @@
-use leptos::*;
+use leptos::prelude::*;
 use router::*;
+use tracing_subscriber::fmt;
+use tracing_subscriber_wasm::MakeConsoleWriter;
 
 pub fn main() {
-    _ = console_log::init_with_level(log::Level::Debug);
+    fmt()
+        .with_writer(MakeConsoleWriter::default().map_trace_level_to(tracing::Level::DEBUG))
+        .without_time()
+        .with_ansi(false)
+        .init();
     console_error_panic_hook::set_once();
     leptos_devtools::devtools!();
-    mount_to_body(|| view! { <RouterExample/> })
+    mount_to_body(RouterExample);
 }
