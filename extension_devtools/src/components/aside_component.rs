@@ -2,12 +2,12 @@ use crate::{
     utils::{get_component_info, ComponentInfo},
     SelectedComponentId,
 };
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn AsideComponentInfo() -> impl IntoView {
     let selected_comp_id = expect_context::<RwSignal<Option<SelectedComponentId>>>();
-    let info = create_memo(move |_| {
+    let info = Memo::new(move |_| {
         if let Some(comp_id) = selected_comp_id.get() {
             get_component_info(&comp_id.0)
         } else {

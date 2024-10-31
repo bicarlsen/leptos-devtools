@@ -2,11 +2,11 @@ use super::aside_component::AsideComponentInfo;
 use super::aside_props::AsideProps;
 use crate::utils::{get_component_info, ComponentInfo};
 use crate::SelectedComponentId;
-use leptos::*;
+use leptos::{ev, prelude::*};
 
 #[component]
 pub fn Aside(aside_width: RwSignal<i32>) -> impl IntoView {
-    let is_mouse_move = create_rw_signal(false);
+    let is_mouse_move = RwSignal::new(false);
     let on_mouse_down = move |_| {
         is_mouse_move.set(true);
     };
@@ -30,7 +30,7 @@ pub fn Aside(aside_width: RwSignal<i32>) -> impl IntoView {
     on_cleanup(move || on_mouse_move.remove());
     let selected_comp_id = expect_context::<RwSignal<Option<SelectedComponentId>>>();
 
-    let info = create_memo(move |_| {
+    let info = Memo::new(move |_| {
         if let Some(comp_id) = selected_comp_id.get() {
             get_component_info(&comp_id.0)
         } else {
@@ -38,7 +38,7 @@ pub fn Aside(aside_width: RwSignal<i32>) -> impl IntoView {
         }
     });
 
-    let style = create_memo(move |_| {
+    let style = Memo::new(move |_| {
         if selected_comp_id.get().is_none() {
             String::from("display: none;")
         } else {

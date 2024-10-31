@@ -7,7 +7,7 @@ use crate::{
     utils::{gen_nodes, Node},
 };
 use components::{Aside, ComponentNode, Crumb};
-use leptos::*;
+use leptos::prelude::*;
 use std::{collections::HashSet, num::NonZeroU64};
 
 fn main() {
@@ -19,22 +19,20 @@ pub struct SelectedComponentId(NonZeroU64);
 
 #[component]
 fn App() -> impl IntoView {
-    let message_component_update = create_rw_signal::<bool>(false);
-    let selected_component_id = create_rw_signal::<Option<SelectedComponentId>>(None);
-    let expand_component = create_rw_signal(HashSet::<NonZeroU64>::new());
-    let aside_width = create_rw_signal(320);
+    let message_component_update = Trigger::new();
+    let selected_component_id = RwSignal::<Option<SelectedComponentId>>::new(None);
+    let expand_component = RwSignal::new(HashSet::<NonZeroU64>::new());
+    let aside_width = RwSignal::new(320);
     provide_context(selected_component_id);
     provide_context(expand_component);
     on_message(message_component_update);
 
-    let nodes = create_memo(move |_| {
-        if message_component_update.get() {
-            message_component_update.set_untracked(false);
-        }
+    let nodes = Memo::new(move |_| {
+        message_component_update;
         gen_nodes(None, 0)
     });
 
-    let nodes_filter = create_memo(move |_| {
+    let nodes_filter = Memo::new(move |_| {
         nodes.with(|nodes| {
             let mut nodes_filter = vec![];
             let mut level_filter = None;

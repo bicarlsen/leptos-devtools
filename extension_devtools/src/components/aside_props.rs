@@ -1,11 +1,14 @@
 use crate::{utils::get_component_props, SelectedComponentId};
-use leptos::*;
+use leptos::{
+    either::{Either, EitherOf6},
+    prelude::*,
+};
 use serde_json::Value;
 
 #[component]
 pub fn AsideProps() -> impl IntoView {
     let selected_comp_id = expect_context::<RwSignal<Option<SelectedComponentId>>>();
-    let props = create_memo(move |_| {
+    let props = Memo::new(move |_| {
         if let Some(comp_id) = selected_comp_id.get() {
             get_component_props(&comp_id.0)
         } else {
@@ -28,22 +31,18 @@ pub fn AsideProps() -> impl IntoView {
                                 <span class="mr-0.5em">":"</span>
                                 {
                                     if let Some(err) = prop.error {
-                                        view! {
-                                            <>
+                                        Some(Either::Left(view! {
                                                 <span
                                                     title=err
                                                     class="prop-value-tag prop-value-tag--error"
                                                 >
                                                     "Error"
                                                 </span>
-                                            </>
-                                        }.into()
+                                        }))
                                     } else if let Some(value) = prop.value {
-                                        view! {
-                                            <>
+                                        Some(Either::Right(view! {
                                                 <Value value/>
-                                            </>
-                                        }.into()
+                                        }))
                                     } else {
                                         None
                                     }
@@ -62,73 +61,101 @@ pub fn AsideProps() -> impl IntoView {
 #[component]
 fn Value(value: Value) -> impl IntoView {
     match value {
-        Value::Null => {
-            view! {
-                <>
-                    <span>"null"</span>
-                </>
-            }
+        Value::Null => view! {
+            <span>"null"</span>
         }
-        Value::Bool(value) => {
-            view! {
-                <>
-                    <span class="color-#03c">{value}</span>
-                </>
-            }
+        .into_any(),
+        Value::Bool(value) => view! {
+            <span class="color-#03c">{value}</span>
         }
-        Value::Number(value) => {
-            view! {
-                <>
-                    <span class="color-#03c">{value.to_string()}</span>
-                </>
-            }
+        .into_any(),
+        Value::Number(value) => view! {
+            <span class="color-#03c">{value.to_string()}</span>
         }
-        Value::String(value) => {
-            view! {
-                <>
-                    <span class="white-space-nowrap">{format!(r#""{value}""#)}</span>
-                </>
-            }
+        .into_any(),
+        Value::String(value) => view! {
+            <span class="white-space-nowrap">{format!(r#""{value}""#)}</span>
         }
-        Value::Array(arr) => {
-            view! {
-                <>
-                    <div class="ml-14px">
-                        {
-                            arr.into_iter().enumerate().map(|(index, value)| {
-                                view! {
-                                    <div class="min-h-20px line-height-20px">
-                                        <span class="color-#8128e8">{index}</span>
-                                        <span class="mr-0.5em">":"</span>
-                                        <Value value/>
-                                    </div>
-                                }
-                            })
-                            .collect::<Vec<_>>()
+        .into_any(),
+        Value::Array(arr) => view! {
+            <div class="ml-14px">
+                {
+                    arr.into_iter().enumerate().map(|(index, value)| {
+                        view! {
+                            <div class="min-h-20px line-height-20px">
+                                <span class="color-#8128e8">{index}</span>
+                                <span class="mr-0.5em">":"</span>
+                                <Value value/>
+                            </div>
                         }
-                    </div>
-                </>
-            }
+                    })
+                    .collect::<Vec<_>>()
+                }
+            </div>
         }
-        Value::Object(obj) => {
-            view! {
-                <>
-                    <div class="ml-14px">
-                        {
-                            obj.into_iter().map(|(key, value)| {
-                                view! {
-                                    <div class="min-h-20px line-height-20px">
-                                        <span class="color-#8128e8">{format!(r#""{key}""#)}</span>
-                                        <span class="mr-0.5em">":"</span>
-                                        <Value value/>
-                                    </div>
-                                }
-                            })
-                            .collect::<Vec<_>>()
+        .into_any(),
+        Value::Object(obj) => view! {
+            <div class="ml-14px">
+                {
+                    obj.into_iter().map(|(key, value)| {
+                        view! {
+                            <div class="min-h-20px line-height-20px">
+                                <span class="color-#8128e8">{format!(r#""{key}""#)}</span>
+                                <span class="mr-0.5em">":"</span>
+                                <Value value/>
+                            </div>
                         }
-                    </div>
-                </>
-            }
+                    })
+                    .collect::<Vec<_>>()
+                }
+            </div>
         }
+        .into_any(),
     }
+    // match value {
+    // Value::Null => EitherOf6::A(view! {
+    //     <span>"null"</span>
+    // }).into_view(),
+    // Value::Bool(value) => EitherOf6::B(view! {
+    //     <span class="color-#03c">{value}</span>
+    // }).into_view(),
+    // Value::Number(value) => EitherOf6::C(view! {
+    //     <span class="color-#03c">{value.to_string()}</span>
+    // }),
+    // Value::String(value) => EitherOf6::D(view! {
+    //     <span class="white-space-nowrap">{format!(r#""{value}""#)}</span>
+    // }),
+    // Value::Array(arr) => EitherOf6::E(view! {
+    //     <div class="ml-14px">
+    //         {
+    //             arr.into_iter().enumerate().map(|(index, value)| {
+    //                 view! {
+    //                     <div class="min-h-20px line-height-20px">
+    //                         <span class="color-#8128e8">{index}</span>
+    //                         <span class="mr-0.5em">":"</span>
+    //                         <Value value/>
+    //                     </div>
+    //                 }
+    //             })
+    //             .collect::<Vec<_>>()
+    //         }
+    //     </div>
+    // }),
+    // Value::Object(obj) => EitherOf6::F(view! {
+    //     <div class="ml-14px">
+    //         {
+    //             obj.into_iter().map(|(key, value)| {
+    //                 view! {
+    //                     <div class="min-h-20px line-height-20px">
+    //                         <span class="color-#8128e8">{format!(r#""{key}""#)}</span>
+    //                         <span class="mr-0.5em">":"</span>
+    //                         <Value value/>
+    //                     </div>
+    //                 }
+    //             })
+    //             .collect::<Vec<_>>()
+    //         }
+    //     </div>
+    // }),
+    // }
 }

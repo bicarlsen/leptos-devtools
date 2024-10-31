@@ -3,7 +3,7 @@ use crate::{
     SelectedComponentId,
 };
 use chrome_wasm_bindgen::*;
-use leptos::*;
+use leptos::prelude::*;
 use leptos_devtools_extension_api::{ComponentChildrenRemove, Event, Message};
 use std::{collections::HashSet, num::NonZeroU64};
 use wasm_bindgen::{prelude::Closure, JsCast, JsValue};
@@ -15,7 +15,7 @@ pub(crate) fn chrome() -> Option<Chrome> {
 
 const LEPTOS_DEVTOOLS_PANEL: &str = "LEPTOS_DEVTOOLS_PANEL";
 
-pub(crate) fn on_message(message_component_update: RwSignal<bool>) {
+pub(crate) fn on_message(message_component_update: Trigger) {
     let selected_component_id = expect_context::<RwSignal<Option<SelectedComponentId>>>();
     let expand_component = expect_context::<RwSignal<HashSet<NonZeroU64>>>();
     let port = chrome().unwrap().runtime().connect_with_connect_info(
@@ -48,7 +48,7 @@ pub(crate) fn on_message(message_component_update: RwSignal<bool>) {
             }
         }
         if component_update {
-            message_component_update.set(true);
+            message_component_update.notify();
         }
     })
     .into_js_value();

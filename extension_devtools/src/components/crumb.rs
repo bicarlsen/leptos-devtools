@@ -2,12 +2,12 @@ use crate::{
     utils::{get_component_crumbs, ComponentCrumb},
     SelectedComponentId,
 };
-use leptos::*;
+use leptos::prelude::*;
 
 #[component]
 pub fn Crumb(aside_width: RwSignal<i32>) -> impl IntoView {
     let selected_comp_id = expect_context::<RwSignal<Option<SelectedComponentId>>>();
-    let crumbs = create_memo(move |_| {
+    let crumbs = Memo::new(move |_| {
         selected_comp_id.with(|comp| {
             if let Some(comp) = comp {
                 get_component_crumbs(&comp.0)
@@ -16,7 +16,7 @@ pub fn Crumb(aside_width: RwSignal<i32>) -> impl IntoView {
             }
         })
     });
-    let style = create_memo(move |_| {
+    let style = Memo::new(move |_| {
         if selected_comp_id.get().is_none() {
             String::from("display: none;")
         } else {

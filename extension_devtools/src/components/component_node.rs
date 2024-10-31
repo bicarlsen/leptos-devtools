@@ -1,5 +1,5 @@
 use crate::SelectedComponentId;
-use leptos::*;
+use leptos::prelude::*;
 use std::{collections::HashSet, num::NonZeroU64};
 
 #[component]
@@ -17,7 +17,7 @@ pub fn ComponentNode(id: NonZeroU64, name: String, level: u64) -> impl IntoView 
             }
         });
     };
-    let selected = create_memo(move |_| selected_comp_id.get().map_or(false, |v| v.0 == id));
+    let selected = Memo::new(move |_| selected_comp_id.get().map_or(false, |v| v.0 == id));
     view! {
         <div
             class="node"
