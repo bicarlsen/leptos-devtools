@@ -1,10 +1,10 @@
 # Leptos Developer Tools
 
 > [!WARNING]
-This library is very unstable.
-When there is a problem, refresh the page or reopen Developer Tools.
+> This library is very unstable.
+> When there is a problem, refresh the page or re-open Developer Tools.
 
-## Use
+## Install
 
 ### 1. Clone the repository
 
@@ -48,9 +48,15 @@ Add this crate to your project's `Cargo.toml` file.
 leptos_devtools = { git = "https://github.com/luoxiaozero/leptos-devtools" }
 ```
 
-Add `leptos_devtools::devtools()` before the `mount_to_body` function in `main`.
+Add `leptos_devtools::devtools!()` before the `mount_to_body` function in `main`.
 
-Leptos devtools should now be avavilable for your project.
+Add the `tracing` feature to `leptos`.
+
+```toml
+leptos = { version = "0.7", features = ["csr", "tracing"] }
+```
+
+Open the `Leptos` devtools in the Developer Tools window.
 
 ## Resources
 
