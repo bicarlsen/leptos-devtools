@@ -1,34 +1,34 @@
 # Leptos Developer Tools
 
-in development
+> [!WARNING]
+This library is very unstable.
+When there is a problem, refresh the page or reopen Developer Tools.
 
-## Used
+## Use
 
-The current library is very unstable.
+### 1. Clone the repository
 
-### 1. Clone current repository
-
-```
+```sh
 git clone git@github.com:luoxiaozero/leptos-devtools.git
 ```
 
-### 2. Build extension
+### 2. Build the extension
 
-Execute the following command in the extension directory.
+Execute the following command in the `extension` directory.
 
-```
+```sh
 pnpm install
 
 pnpm build
 ```
 
-### 3. Install the chrome extension
+### 3. Install the Chrome extension
 
 1. Open the extension page in google chrome.
 
-- chrome://extensions in the url bar and press enter.
+- `chrome://extensions` in the url bar and press enter.
 
-- click on the tree dots in the top right of the browser, then click "More tools" then click "Extensions".
+- Click on the three dots in the top right of the browser, then click "More tools" then click "Extensions".
 
 2. Activate developer mode.
 
@@ -38,23 +38,19 @@ Turn on the switch on the top right of the page that says "Developer mode".
    
 Click on the button on the top left of the page that says "Load unpacked".
 
-Then select a folder that `extension/dist` directory.
+Select the `extension/dist` directory. `Leptos Devtools` should appear in your extension manager dashboard.
 
-### 4. Reference current library
+### 4. Initialize the app
 
-Add current library to Cargo.toml file.
+Add this crate to your project's `Cargo.toml` file.
 
-```
+```toml
 leptos_devtools = { git = "https://github.com/luoxiaozero/leptos-devtools" }
 ```
 
-Then add `lepton_devtools::devtools()` before `mount_to_body` function in `main` function;
+Add `leptos_devtools::devtools()` before the `mount_to_body` function in `main`.
 
-### 5. Run the Project and play with the Developer Tools.
-
-The current library is very unstable.
-
-When there is a problem, refresh the page or reopen Developer Tools.
+Leptos devtools should now be avavilable for your project.
 
 ## Resources
 
