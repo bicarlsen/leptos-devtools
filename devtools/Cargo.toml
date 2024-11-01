@@ -12,7 +12,7 @@ license = "MIT"
 [dependencies]
 leptos_devtools_extension_api = { workspace = true }
 tracing.workspace = true
-tracing-subscriber = { workspace = true, default-features = false, features = [
+tracing-subscriber = { version = "0.3.17", default-features = false, features = [
     "smallvec",
     "fmt",
     "std",

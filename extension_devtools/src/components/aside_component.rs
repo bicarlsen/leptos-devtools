@@ -26,7 +26,7 @@ pub fn AsideComponentInfo() -> impl IntoView {
                     {
                         if let Some(location) = location {
                             view! {
-                                <span class="white-space-nowrap">{format!(r#""{location}""#)}</span>
+                                <span class="whitespace-nowrap">{format!(r#""{location}""#)}</span>
                             }.into()
                         } else {
                             None

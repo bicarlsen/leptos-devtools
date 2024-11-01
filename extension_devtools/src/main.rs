@@ -8,6 +8,7 @@ use crate::{
 };
 use components::{Aside, ComponentNode, Crumb};
 use leptos::prelude::*;
+use leptos_meta::Body;
 use std::{collections::HashSet, num::NonZeroU64};
 
 fn main() {
@@ -53,7 +54,8 @@ fn App() -> impl IntoView {
         })
     });
     view! {
-        <section class="flex h-screen">
+        <Body {..} class="m-0 font-['Roboto Mono'] font-mono" />
+        <section class="flex h-screen @dark:bg-#222 @dark:color-white">
             <main class="flex-1 flex flex-col">
                 <div class="flex-1 p-8px overflow-auto">
                     <For
@@ -61,15 +63,13 @@ fn App() -> impl IntoView {
                         key=|node| node.id.clone()
                         children=|node| {
                             let Node { id, name, level } = node;
-                            view! {
-                                <ComponentNode id name level/>
-                            }
+                            view! { <ComponentNode id name level /> }
                         }
                     />
                 </div>
-                <Crumb aside_width/>
+                <Crumb aside_width />
             </main>
-            <Aside aside_width/>
+            <Aside aside_width />
         </section>
     }
 }

@@ -20,35 +20,35 @@ pub fn AsideProps() -> impl IntoView {
         } else {
             view! {
                 <div class="my-6px">"props"</div>
-                {
-                    props.into_iter().map(|prop| {
+                {props
+                    .into_iter()
+                    .map(|prop| {
                         view! {
                             <div class="ml-14px min-h-20px line-height-20px">
                                 <span class="color-#8128e8">{prop.name}</span>
                                 <span class="mr-0.5em">":"</span>
-                                {
-                                    if let Some(err) = prop.error {
-                                        Some(Either::Left(view! {
+                                {if let Some(err) = prop.error {
+                                    Some(
+                                        Either::Left(
+                                            view! {
                                                 <span
                                                     title=err
-                                                    class="prop-value-tag prop-value-tag--error"
+                                                    class="py-0 px-1 border border-#ddd @dark:border-#333 rounded-sm text-sm bg-red color-white border-transparent"
                                                 >
                                                     "Error"
                                                 </span>
-                                        }))
-                                    } else if let Some(value) = prop.value {
-                                        Some(Either::Right(view! {
-                                                <Value value/>
-                                        }))
-                                    } else {
-                                        None
-                                    }
-                                }
+                                            },
+                                        ),
+                                    )
+                                } else if let Some(value) = prop.value {
+                                    Some(Either::Right(view! { <Value value /> }))
+                                } else {
+                                    None
+                                }}
                             </div>
                         }
                     })
-                    .collect::<Vec<_>>()
-                }
+                    .collect::<Vec<_>>()}
             }
             .into()
         }
@@ -58,53 +58,46 @@ pub fn AsideProps() -> impl IntoView {
 #[component]
 fn Value(value: Value) -> impl IntoView {
     match value {
-        Value::Null => view! {
-            <span>"null"</span>
+        Value::Null => view! { <span>"null"</span> }.into_any(),
+        Value::Bool(value) => view! { <span class="color-#03c">{value}</span> }.into_any(),
+        Value::Number(value) => {
+            view! { <span class="color-#03c">{value.to_string()}</span> }.into_any()
         }
-        .into_any(),
-        Value::Bool(value) => view! {
-            <span class="color-#03c">{value}</span>
+        Value::String(value) => {
+            view! { <span class="whitespace-nowrap">{format!(r#""{value}""#)}</span> }.into_any()
         }
-        .into_any(),
-        Value::Number(value) => view! {
-            <span class="color-#03c">{value.to_string()}</span>
-        }
-        .into_any(),
-        Value::String(value) => view! {
-            <span class="white-space-nowrap">{format!(r#""{value}""#)}</span>
-        }
-        .into_any(),
         Value::Array(arr) => view! {
             <div class="ml-14px">
-                {
-                    arr.into_iter().enumerate().map(|(index, value)| {
+                {arr
+                    .into_iter()
+                    .enumerate()
+                    .map(|(index, value)| {
                         view! {
                             <div class="min-h-20px line-height-20px">
                                 <span class="color-#8128e8">{index}</span>
                                 <span class="mr-0.5em">":"</span>
-                                <Value value/>
+                                <Value value />
                             </div>
                         }
                     })
-                    .collect::<Vec<_>>()
-                }
+                    .collect::<Vec<_>>()}
             </div>
         }
         .into_any(),
         Value::Object(obj) => view! {
             <div class="ml-14px">
-                {
-                    obj.into_iter().map(|(key, value)| {
+                {obj
+                    .into_iter()
+                    .map(|(key, value)| {
                         view! {
                             <div class="min-h-20px line-height-20px">
                                 <span class="color-#8128e8">{format!(r#""{key}""#)}</span>
                                 <span class="mr-0.5em">":"</span>
-                                <Value value/>
+                                <Value value />
                             </div>
                         }
                     })
-                    .collect::<Vec<_>>()
-                }
+                    .collect::<Vec<_>>()}
             </div>
         }
         .into_any(),

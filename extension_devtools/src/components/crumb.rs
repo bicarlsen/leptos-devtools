@@ -24,7 +24,7 @@ pub fn Crumb(aside_width: RwSignal<i32>) -> impl IntoView {
         }
     });
     view! {
-        <div class="h-22px line-height-22px b-t b-t-solid b-t-#ddd overflow-x-auto white-space-nowrap" style=move || style.get()>
+        <div class="h-22px line-height-22px b-t b-t-solid b-t-#ddd overflow-x-auto whitespace-nowrap" style=move || style.get()>
             <For
                 each=move || crumbs.get()
                 key=|crumb| crumb.id.clone()
